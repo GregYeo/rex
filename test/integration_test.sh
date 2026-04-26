@@ -6,6 +6,8 @@ RS_BINARY=$2
 
 PROJECT_ROOT=$(pwd)
 DOCKER_HOST=localhost
+#DOCKER_HOST=192.168.64.2
+DOCKER_HOST=ubuntu.vm
 
 echo "Using binary: $RS_BINARY"
 
