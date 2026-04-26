@@ -24,6 +24,7 @@ jobs:
           brew install sshpass cmake colima docker
           
           ## colima setting
+          brew services start colima
           # Force stop and delete the broken instance
           colima delete -f
           rm -rf ~/.colima ~/.lima
