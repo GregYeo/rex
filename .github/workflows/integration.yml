@@ -25,12 +25,7 @@ jobs:
           
           ## colima setting
           brew services start colima
-          # Force stop and delete the broken instance
-          colima delete -f
-          rm -rf ~/.colima ~/.lima
-          colima start --cpu 2 --memory 4
-          # Point the docker CLI to the colima socket
-          sudo ln -sf ~/.colima/default/docker.sock /var/run/docker.sock
+          docker version
 
       - name: Configure and Build
         run: cmake -B cmake-build-debug -DCMAKE_BUILD_TYPE=Release
