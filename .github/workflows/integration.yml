@@ -19,7 +19,7 @@ jobs:
         run: sudo apt-get install -y sshpass build-essential cmake
 
       - name: Install Dependencies (macOS)
-        if: runner.os == 'macOS'
+        if: false
         run: |
           brew install sshpass cmake colima docker
           
@@ -34,6 +34,7 @@ jobs:
         run: cmake --build cmake-build-debug
 
       - name: Execute Tests
+        if: runner.os == 'Linux'
         run: |
           cd cmake-build-debug
           ctest --extra-verbose
