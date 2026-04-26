@@ -44,7 +44,7 @@ Config parse_config(const fs::path& config_path) {
 }
 
 int main(int argc, char* argv[]) {
-    constexpr std::string binary_name = "rex";
+    constexpr std::string_view binary_name = "rex";
     std::string default_yaml_filename = std::string(binary_name) + ".yaml";
     std::string default_yml_filename = std::string(binary_name) + ".yml";
 
