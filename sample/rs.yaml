@@ -1,0 +1,4 @@
+remote_host: 192.168.10.1
+remote_user: greg
+remote_port: 2222
+remote_dir: /tmp

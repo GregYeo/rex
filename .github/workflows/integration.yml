@@ -1,0 +1,43 @@
+name: Remote Server Integration Test
+
+on: [push]
+
+jobs:
+  build-and-test:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Testing the three major OS environments
+        os: [ ubuntu-latest, macos-latest ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get install -y sshpass build-essential cmake
+
+      - name: Install Dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: brew install sshpass cmake
+
+      - name: Install dependencies
+        run: sudo apt-get install -y sshpass build-essential cmake
+
+      - name: Configure and Build
+        run: cmake -B cmake-build-debug -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build cmake-build-debug
+
+      - name: Execute Tests
+        run: |
+          cd cmake-build-debug
+          ctest --extra-verbose
+
+      - name: Upload Binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: rs-${{ matrix.os }}
+          path: cmake-build-debug/rs*

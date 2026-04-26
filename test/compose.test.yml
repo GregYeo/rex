@@ -1,0 +1,14 @@
+services:
+  remote-vm:
+    image: lscr.io/linuxserver/openssh-server:latest
+    container_name: remote-vm
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - USER_NAME=greg
+      - USER_PASSWORD=password123 # For testing purposes
+      - PASSWORD_ACCESS=true
+      - SUDO_ACCESS=true
+    ports:
+      - "2222:2222"
