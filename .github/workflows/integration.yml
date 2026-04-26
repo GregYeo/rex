@@ -20,7 +20,11 @@ jobs:
 
       - name: Install Dependencies (macOS)
         if: runner.os == 'macOS'
-        run: brew install sshpass cmake
+        run: |
+          brew install sshpass cmake colima docker
+          colima start --cpu 2 --memory 4
+          # Point the docker CLI to the colima socket
+          sudo ln -sf ~/.colima/default/docker.sock /var/run/docker.sock
 
       - name: Configure and Build
         run: cmake -B cmake-build-debug -DCMAKE_BUILD_TYPE=Release
