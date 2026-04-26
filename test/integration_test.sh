@@ -21,7 +21,7 @@ EOF
 
 echo "Spin up SSH Server"
 docker compose -f ${TEST_ROOT}/compose.test.yml up -d --wait
-#trap "docker compose -f ${TEST_ROOT}/compose.test.yml down" EXIT # Ensure cleanup on fail
+trap "docker compose -f ${TEST_ROOT}/compose.test.yml down" EXIT # Ensure cleanup on fail
 
 # We create a wrapper so 'rs' (which calls 'ssh') doesn't hang for a password
 echo "Mock SSH Password handling for the runner"
