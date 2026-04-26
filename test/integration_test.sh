@@ -2,17 +2,17 @@
 set -e
 
 TEST_ROOT=$1
-RS_BINARY=$2
+REX_BINARY=$2
 
 PROJECT_ROOT=$(pwd)
 DOCKER_HOST=localhost
 
-echo "Using binary: $RS_BINARY"
+echo "Using binary: $REX_BINARY"
 
 echo "Setup local project environment for the test"
-TEST_DIR="/tmp/rs_test_env"
+TEST_DIR="/tmp/rex_test_env"
 rm -rf $TEST_DIR && mkdir -p $TEST_DIR/sub
-cat <<EOF > $TEST_DIR/rs.yaml
+cat <<EOF > $TEST_DIR/rex.yaml
 remote_host: $DOCKER_HOST
 remote_port: 2222
 remote_user: greg
@@ -23,7 +23,7 @@ echo "Spin up SSH Server"
 docker compose -f ${TEST_ROOT}/compose.test.yml up -d --wait
 trap "docker compose -f ${TEST_ROOT}/compose.test.yml down" EXIT # Ensure cleanup on fail
 
-# We create a wrapper so 'rs' (which calls 'ssh') doesn't hang for a password
+# We create a wrapper so 'rex' (which calls 'ssh') doesn't hang for a password
 echo "Mock SSH Password handling for the runner"
 export SSHPASS="password123"
 echo '#!/bin/bash' > $TEST_DIR/ssh
@@ -41,7 +41,7 @@ echo "CASE: Touching file in remote"
 echo "================================"
 
 echo "When: Simple file touch command"
-$RS_BINARY touch touch_result.txt
+$REX_BINARY touch touch_result.txt
 
 echo "Then: touch_result.txt file is found in remote_dir"
 echo "Verify"
@@ -57,7 +57,7 @@ echo "CASE: Running Quote script"
 echo "================================"
 
 echo "When: Command is quoted and includes redirection"
-$RS_BINARY "echo 'hello' > test1.txt"
+$REX_BINARY "echo 'hello' > test1.txt"
 
 echo "Then: test1.txt file is found in remote_dir"
 if docker exec remote-vm ls /tmp | grep -q "test1.txt"; then
@@ -84,7 +84,7 @@ ls -la >> script_result.txt
 EOF
 
 echo "When: Command is streamed from stdin"
-$RS_BINARY bash -s < $TEST_DIR/task.sh
+$REX_BINARY bash -s < $TEST_DIR/task.sh
 
 echo "Then: script_result.txt file is found in remote_dir"
 if docker exec remote-vm ls /tmp | grep -q "script_result.txt"; then

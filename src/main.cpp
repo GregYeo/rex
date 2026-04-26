@@ -55,12 +55,12 @@ int main(int argc, char* argv[]) {
 
     // 1. Locate Root Logic (Supporting .yaml and .yml)
     while (true) {
-        if (fs::exists(current / "rs.yaml")) {
-            config_path = current / "rs.yaml";
+        if (fs::exists(current / "rex.yaml")) {
+            config_path = current / "rex.yaml";
             found = true;
             break;
-        } else if (fs::exists(current / "rs.yml")) {
-            config_path = current / "rs.yml";
+        } else if (fs::exists(current / "rex.yml")) {
+            config_path = current / "rex.yml";
             found = true;
             break;
         }
@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (!found) {
-        std::cerr << "Error: rs.yaml or rs.yml not found in this or any parent directory." << std::endl;
+        std::cerr << "Error: rex.yaml or rex.yml not found in this or any parent directory." << std::endl;
         return 1;
     }
 

@@ -42,5 +42,5 @@ jobs:
       - name: Upload Binary
         uses: actions/upload-artifact@v4
         with:
-          name: rs-${{ matrix.os }}
-          path: cmake-build-debug/rs*
+          name: rex-${{ matrix.os }}
+          path: cmake-build-debug/rex*
